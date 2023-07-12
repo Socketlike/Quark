@@ -40,7 +40,7 @@ However the syntax is simple enough that you can write the snippet data on your 
 
 - Open `DevTools`' console.
 - Execute
-  `` replugged.plugins.getExports('lib.evelyn.Quark').config.set([{ enabled: true, name: 'snippet-name', start: `<insert javascript code>`, stop: `<insert javascript code or remove this key>` }])  ``
+  `` replugged.plugins.getExports('lib.evelyn.Quark').config.set('scripts', [{ enabled: true, name: 'snippet-name', start: `<insert javascript code>`, stop: `<insert javascript code or remove this key>` }])  ``
 - Reload plugin
 - Profit???
 
