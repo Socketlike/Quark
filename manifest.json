@@ -1,16 +1,16 @@
 {
-  "id": "dev.replugged.PluginTemplate",
-  "name": "Plugin Template",
-  "description": "A plugin template",
+  "id": "lib.evelyn.Quark",
+  "name": "Quark",
+  "description": "A Post-SWC Replugged plugin that allows you to create persistent JavaScript snippets.",
   "author": {
-    "name": "replugged",
-    "discordID": "1000992611840049192",
-    "github": "replugged-org"
+    "name": "Evelyn",
+    "discordID": "285329659023851520",
+    "github": "Socketlike"
   },
   "version": "1.0.0",
   "updater": {
     "type": "github",
-    "id": "replugged-org/plugin-template"
+    "id": "Socketlike/Quark"
   },
   "license": "MIT",
   "type": "replugged-plugin",

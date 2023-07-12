@@ -1,26 +1,70 @@
-import { Injector, Logger, webpack } from "replugged";
+import { Logger } from 'replugged';
+import { config } from '@settings';
 
-const inject = new Injector();
-const logger = Logger.plugin("PluginTemplate");
+export const logger = Logger.plugin('Quark');
 
-export async function start(): Promise<void> {
-  const typingMod = await webpack.waitForModule<{
-    startTyping: (channelId: string) => void;
-  }>(webpack.filters.byProps("startTyping"));
-  const getChannelMod = await webpack.waitForModule<{
-    getChannel: (id: string) => {
-      name: string;
-    };
-  }>(webpack.filters.byProps("getChannel"));
+export const strings = {
+  DISABLED: 'snippet-disabled',
+  DUPLICATE_NAME: 'duplicate-snippet-name',
+  INVALID_NAME: 'invalid-snippet-name',
+  NO_START_SCRIPT: 'no-start-script',
+  NO_STOP_SCRIPT: 'no-stop-script',
+  NOT_RAN: 'not-ran',
+  error: (name: string, start: boolean) =>
+    `An error occurred whilst running ${start ? 'start' : 'stop'} script for snippet "${name}"`,
+  running: (name: string, start: boolean) =>
+    `Running ${start ? 'start' : 'stop'} script for snippet "${name}"`,
+  skipped: (name: string, reason: string, start: boolean) =>
+    `Skipped running ${start ? 'start' : 'stop'} script for snippet "${name}" (${
+      reason || 'unknown-reason'
+    })`,
+};
 
-  if (typingMod && getChannelMod) {
-    inject.instead(typingMod, "startTyping", ([channel]) => {
-      const channelObj = getChannelMod.getChannel(channel);
-      logger.log(`Typing prevented! Channel: #${channelObj?.name ?? "unknown"} (${channel}).`);
-    });
-  }
-}
+export const quarks = new Map<string, Map<string, unknown>>();
 
-export function stop(): void {
-  inject.uninjectAll();
-}
+export const start = (): void => {
+  config.get('scripts')?.forEach?.(({ enabled, name, start, stop }): void => {
+    if (!enabled) logger.log(strings.skipped(name, strings.DISABLED, true), start, stop);
+    else if (typeof name !== 'string' || !name)
+      logger.error(strings.skipped(name, strings.INVALID_NAME, true), start, stop);
+    else if (quarks.has(name))
+      logger.error(strings.skipped(name, strings.DUPLICATE_NAME, true), start, stop);
+    else if (!start)
+      logger.error(strings.skipped(name, strings.NO_START_SCRIPT, true), start, stop);
+    else {
+      quarks.set(name, new Map<string, unknown>());
+
+      logger.log(strings.running(name, true));
+
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
+        Function('quark', start).call(window, { logger, storage: quarks.get(name) });
+      } catch (e) {
+        logger.error(strings.error(name, true), e);
+      }
+    }
+  });
+};
+
+export const stop = (): void => {
+  config.get('scripts')?.forEach?.(({ enabled, name, start, stop }): void => {
+    if (!enabled) logger.log(strings.skipped(name, strings.DISABLED, false), start, stop);
+    else if (typeof name !== 'string' || !name)
+      logger.error(strings.skipped(name, strings.INVALID_NAME, false), start, stop);
+    else if (!stop) logger.error(strings.skipped(name, strings.NO_STOP_SCRIPT, false), start, stop);
+    else if (!quarks.has(name))
+      logger.error(strings.skipped(name, strings.NOT_RAN, false), start, stop);
+    else {
+      logger.log(strings.running(name, false));
+
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
+        Function('quark', stop).call(window, { logger, storage: quarks.get(name) });
+      } catch (e) {
+        logger.error(`An error was raised when stopping snippet "${name}":`, e);
+      }
+    }
+  });
+};
+
+export { Settings, config } from '@settings';

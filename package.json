@@ -1,15 +1,18 @@
 {
-  "name": "plugin-template",
+  "name": "Quark",
   "version": "1.0.0",
-  "description": "A plugin template",
+  "description": "A Post-SWC Replugged plugin that allows you to create persistent JavaScript snippets.",
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
   },
   "scripts": {
-    "build": "replugged build plugin",
-    "watch": "replugged build plugin --watch",
-    "bundle": "replugged bundle plugin",
+    "build:dev": "replugged build plugin --no-reload",
+    "build:dev:bundle": "replugged bundle plugin --no-reload",
+    "build:prod": "replugged build plugin --production --no-reload",
+    "build:prod:bundle": "replugged bundle plugin --production --no-reload",
+    "watch:dev": "replugged build plugin",
+    "watch:prod": "replugged build plugin --production",
     "check": "tsc --noEmit",
     "prettier:check": "prettier ./src --check",
     "eslint:check": "eslint ./src",
@@ -20,17 +23,18 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.15.11",
-    "@typescript-eslint/eslint-plugin": "^5.57.0",
-    "@typescript-eslint/parser": "^5.57.0",
-    "eslint": "^8.37.0",
+    "@types/node": "^18.16.19",
+    "@types/react": "^18.2.14",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.44.0",
     "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.32.2",
-    "prettier": "^2.8.7",
-    "replugged": "^4.4.2",
-    "typescript": "^5.0.3"
+    "prettier": "^2.8.8",
+    "replugged": "^4.5.1",
+    "typescript": "^5.1.6"
   }
 }
