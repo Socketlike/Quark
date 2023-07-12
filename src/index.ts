@@ -61,7 +61,7 @@ export const stop = (): void => {
         // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
         Function('quark', stop).call(window, { logger, storage: quarks.get(name) });
       } catch (e) {
-        logger.error(`An error was raised when stopping snippet "${name}":`, e);
+        logger.error(strings.error(name, false), e);
       }
     }
   });
