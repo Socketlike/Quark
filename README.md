@@ -40,6 +40,8 @@ However the syntax is simple enough that you can write the snippet data on your 
 
 - Start by forming your snippets into this format
   ```ts
+  type Name = string;
+
   interface Quark {
     enabled: boolean;
     start: string;
@@ -49,11 +51,12 @@ However the syntax is simple enough that you can write the snippet data on your 
 - You should have something like this:
   ```js
   "test snippet 1" // name
-  {
+
+  { // snippet object
     "enabled": true,
     "start": "console.log('hi')",
     "stop": "console.log('bye')"
-  } // snippet object
+  }
   ```
 - Open `DevTools`' console and execute
   ```ts
