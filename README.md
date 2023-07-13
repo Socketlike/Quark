@@ -47,12 +47,13 @@ However the syntax is simple enough that you can write the snippet data on your 
   }
   ```
 - You should have something like this:
-  ```json
-  "test snippet 1": {
+  ```js
+  "test snippet 1" // name
+  {
     "enabled": true,
     "start": "console.log('hi')",
     "stop": "console.log('bye')"
-  },
+  } // snippet object
   ```
 - Open `DevTools`' console and execute
   ```ts
