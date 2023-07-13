@@ -36,5 +36,8 @@
     "prettier": "^2.8.8",
     "replugged": "^4.5.1",
     "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.195"
   }
 }

@@ -1,14 +1,12 @@
-import { common, settings } from 'replugged';
+import { Logger, common, settings } from 'replugged';
+import type { Quark } from '@quark';
 
 const { React } = common;
 
+export const logger = Logger.plugin('Quark');
+
 export const defaultConfig = {
-  scripts: [] as Array<{
-    enabled: boolean;
-    name: string;
-    start: string;
-    stop?: string;
-  }>,
+  quarks: {} as Record<string, Quark>,
 };
 
 export const config = await settings.init('lib.evelyn.Quark', defaultConfig);

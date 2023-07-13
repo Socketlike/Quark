@@ -38,41 +38,39 @@ However the syntax is simple enough that you can write the snippet data on your 
 
 ## Okay, how do I write snippets?
 
-- Start by envisioning your snippets as an
+- Start by forming your snippets into this format
   ```ts
-  Array<{
-    enabled: boolean,
-    name: string,
-    start: string,
-    stop?: string,
-  }>
+  interface Quark {
+    enabled: boolean;
+    start: string;
+    stop?: string;
+  }
   ```
 - You should have something like this:
-  ```ts
-  [
-    {
-      enabled: true,
-      name: 'test snippet 1',
-      start: "console.log('hi')",
-      stop: "console.log('bye')",
-    },
-    {
-      enabled: true,
-      name 'test snippet 2',
-      start: 'this is a malformed expression—this is fine—errors will be caught',
-    }
-  ]
+  ```json
+  "test snippet 1": {
+    "enabled": true,
+    "start": "console.log('hi')",
+    "stop": "console.log('bye')"
+  },
   ```
 - Open `DevTools`' console and execute
   ```ts
-  replugged.plugins.getExports('lib.evelyn.Quark').config.set('scripts', <insert envisioned array here>);
+  replugged.plugins.getExports('lib.evelyn.Quark').quark.add(
+    '<insert snippet name name>',
+    \<insert snippet object here\>
+  );
   ```
 - Reload plugin and profit from the swag automation
 
-## Misc
+## Scope
 
-- The snippet's scope is `window`.
-- The snippet also has `quark` on its scope
-  - `quark.logger`: the plugin's logger
-  - `quark.storage`: a `Map` object to store data that persists between the snippet's start script
-    and stop script
+```ts
+{
+  this: window,
+  quark: {
+    logger: (...args: unknown[]) => void,
+    storage: Map<string, unknown>, // default: ['snippetName' => <quark's name>]
+  }
+}
+```
