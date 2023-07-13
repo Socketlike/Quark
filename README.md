@@ -76,4 +76,3 @@ However the syntax is simple enough that you can write the snippet data on your 
   - `quark.logger`: the plugin's logger
   - `quark.storage`: a `Map` object to store data that persists between the snippet's start script
     and stop script
- array
