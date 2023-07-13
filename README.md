@@ -58,8 +58,8 @@ However the syntax is simple enough that you can write the snippet data on your 
 - Open `DevTools`' console and execute
   ```ts
   replugged.plugins.getExports('lib.evelyn.Quark').quark.add(
-    '<insert snippet name name>',
-    \<insert snippet object here\>
+    "<insert snippet name name>",
+    <insert snippet object here>
   );
   ```
 - Reload plugin and profit from the swag automation
