@@ -64,8 +64,12 @@ However the syntax is simple enough that you can write the snippet data on your 
     "<insert snippet name name>",
     <insert snippet object here>
   );
+
+  replugged.plugins.getExports('lib.evelyn.Quark').quark.start(
+    "<insert snippet name here>"
+  );
   ```
-- Reload plugin and profit from the swag automation
+- Profit from the illegally swag automation
 
 ## Scope
 
