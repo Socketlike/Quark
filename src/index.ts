@@ -1,6 +1,7 @@
 import { common } from 'replugged';
 import { config, logger } from '@util';
 import { loadAll, startAll, stopAll } from '@quark';
+import './style.css';
 
 const { fluxDispatcher, toast } = common;
 
@@ -41,5 +42,6 @@ export const start = (): void => {
 
 export const stop = (): void => stopAll();
 
-export { Settings, config } from '@util';
+export { Settings, Editor, openEditor } from '@components';
+export { config } from '@util';
 export * as quark from '@quark';

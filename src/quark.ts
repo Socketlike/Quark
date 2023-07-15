@@ -1,4 +1,4 @@
-import { config, logger } from '@util';
+import { _logger, config, logger } from '@util';
 import { common } from 'replugged';
 
 const { lodash: _ } = common;
@@ -32,7 +32,7 @@ export const createQuarkTools = (name: string): QuarkTools => {
     storage.set(name, new Map<string, unknown>([['snippetName', name]]));
 
   return {
-    logger: (...args: unknown[]): void => logger.log(`(quark "${name}")`, ...args),
+    logger: (...args: unknown[]): void => _logger.log(`(quark "${name}")`, ...args),
     storage: storage.get(name) || new Map<string, unknown>([['snippetName', name]]),
   };
 };
@@ -51,7 +51,7 @@ export const start = (name: string): void => {
     else if (!quark.enabled)
       logger.log(
         `won't start quark "${name}": not enabled${
-          'enabled' in quark ? ' (the key "enabled" is missing in quark. try adding it)' : ''
+          'enabled' in quark ? '' : ' (the key "enabled" is missing in quark. try adding it)'
         }`,
       );
     else if (typeof quark.start !== 'string')
@@ -61,9 +61,9 @@ export const start = (name: string): void => {
         // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
         Function('quark', quark.start).call(window, createQuarkTools(name));
         started.add(name);
-        logger.log(`started quark "${name}"`);
+        _logger.log(`started quark "${name}"`);
       } catch (e) {
-        logger.error(`starting quark "${name}" failed: eval error`, e);
+        _logger.error(`starting quark "${name}" failed: eval error`, e);
       }
     }
   }
@@ -86,9 +86,9 @@ export const stop = (name: string): void => {
       try {
         // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
         Function('quark', quark.stop).call(window, createQuarkTools(name));
-        logger.log(`stopped quark "${name}"`);
+        _logger.log(`stopped quark "${name}"`);
       } catch (e) {
-        logger.error(`stopping quark "${name}" failed: eval error`, e);
+        _logger.error(`stopping quark "${name}" failed: eval error`, e);
       } finally {
         storage.delete(name);
         started.delete(name);
@@ -112,6 +112,7 @@ export const load = (name: string): void => {
     if (started.has(name)) stop(name);
 
     quarks.set(name, quarksConfig[name]);
+
     logger.log(`loaded quark "${name}"`);
   } else
     logger.log(
@@ -195,3 +196,35 @@ export const remove = (name: string): void => {
     logger.log(`removed quark "${name}"`);
   }
 };
+
+export const get = (name: string, cached = false): Quark =>
+  _.clone(cached ? quarks.get(name) : config.get('quarks')[name]);
+
+export const getAll = (cached = false): Record<string, Quark> => {
+  if (cached)
+    return [...quarks.entries()]
+      .sort(([a], [b]): number => a.localeCompare(b))
+      .reduce((acc, [name, quark]): Record<string, Quark> => {
+        acc[name] = _.clone(quark);
+        return acc;
+      }, {});
+  else return _.clone(config.get('quarks'));
+};
+
+export const toggle = (name: string, state: boolean): void => {
+  if (typeof name !== 'string' || !name)
+    logger.log(`won't toggle quark "${name || '<blank name>'}": invalid name`);
+  else if (!(name in config.get('quarks')) && !(name in [...quarks.keys()]))
+    logger.log(`won't toggle quark "${name}": quark with name "${name}" doesn't exist`);
+  else {
+    const quark = get(name);
+
+    quark.enabled = state;
+
+    add(name, quark, true);
+
+    if (quark.enabled && !started.has(name)) start(name);
+  }
+};
+
+export const has = (name: string, cached = false): boolean => Boolean(get(name, cached));

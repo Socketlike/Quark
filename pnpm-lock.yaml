@@ -4,12 +4,28 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
+devDependencies:
+  '@codemirror/lang-javascript':
+    specifier: ^6.1.9
+    version: 6.1.9
+  '@codemirror/language':
+    specifier: ^6.8.0
+    version: 6.8.0
+  '@codemirror/state':
+    specifier: ^6.2.1
+    version: 6.2.1
+  '@codemirror/view':
+    specifier: ^6.14.1
+    version: 6.14.1
+  '@lezer/highlight':
+    specifier: ^1.1.6
+    version: 1.1.6
+  '@mdi/js':
+    specifier: ^7.2.96
+    version: 7.2.96
   '@types/lodash':
     specifier: ^4.14.195
     version: 4.14.195
-
-devDependencies:
   '@types/node':
     specifier: ^18.16.19
     version: 18.16.19
@@ -22,6 +38,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: ^5.62.0
     version: 5.62.0(eslint@8.44.0)(typescript@5.1.6)
+  codemirror:
+    specifier: ^6.0.1
+    version: 6.0.1(@lezer/common@1.0.3)
   eslint:
     specifier: ^8.44.0
     version: 8.44.0
@@ -40,6 +59,9 @@ devDependencies:
   replugged:
     specifier: ^4.5.1
     version: 4.5.1(@codemirror/view@6.14.1)(@lezer/common@1.0.3)
+  style-mod:
+    specifier: ^4.0.3
+    version: 4.0.3
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
@@ -105,6 +127,18 @@ packages:
       '@lezer/css': 1.1.3
     transitivePeerDependencies:
       - '@codemirror/view'
+    dev: true
+
+  /@codemirror/lang-javascript@6.1.9:
+    resolution: {integrity: sha512-z3jdkcqOEBT2txn2a87A0jSy6Te3679wg/U8QzMeftFt+4KA6QooMwfdFzJiuC3L6fXKfTXZcDocoaxMYfGz0w==}
+    dependencies:
+      '@codemirror/autocomplete': 6.8.1(@codemirror/language@6.8.0)(@codemirror/state@6.2.1)(@codemirror/view@6.14.1)(@lezer/common@1.0.3)
+      '@codemirror/language': 6.8.0
+      '@codemirror/lint': 6.4.0
+      '@codemirror/state': 6.2.1
+      '@codemirror/view': 6.14.1
+      '@lezer/common': 1.0.3
+      '@lezer/javascript': 1.4.4
     dev: true
 
   /@codemirror/language@6.8.0:
@@ -442,6 +476,13 @@ packages:
       '@lezer/common': 1.0.3
     dev: true
 
+  /@lezer/javascript@1.4.4:
+    resolution: {integrity: sha512-0BiBjpEcrt2IXrIzEAsdTLylrVhGHRqVQL3baTBx1sf4qewjIvhG1/pTUumu7W/7YR0AASjLQOQxFmo5EvNmzQ==}
+    dependencies:
+      '@lezer/highlight': 1.1.6
+      '@lezer/lr': 1.3.9
+    dev: true
+
   /@lezer/lr@0.15.8:
     resolution: {integrity: sha512-bM6oE6VQZ6hIFxDNKk8bKPa14hqFrV07J/vHGOeiAbJReIaQXmkVb6xQu4MR+JBTLa5arGRyAAjJe1qaQt3Uvg==}
     dependencies:
@@ -501,6 +542,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@mdi/js@7.2.96:
+    resolution: {integrity: sha512-paR9M9ZT7rKbh2boksNUynuSZMHhqRYnEZOm/KrZTjQ4/FzyhjLHuvw/8XYzP+E7fS4+/Ms/82EN1pl/OFsiIA==}
+    dev: true
 
   /@mischnic/json-sourcemap@0.1.0:
     resolution: {integrity: sha512-dQb3QnfNqmQNYA4nFSN/uLaByIic58gOXq4Y4XqLOWmOrw73KmJPt/HLyG0wvn1bnR6mBKs/Uwvkh+Hns1T0XA==}
@@ -1643,7 +1688,7 @@ packages:
 
   /@types/lodash@4.14.195:
     resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
-    dev: false
+    dev: true
 
   /@types/node@18.16.19:
     resolution: {integrity: sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA==}
