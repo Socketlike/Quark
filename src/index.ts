@@ -1,5 +1,5 @@
 import { common } from 'replugged';
-import { config, logger } from '@util';
+import { config, _logger } from '@util';
 import { loadAll, startAll, stopAll } from '@quark';
 import './style.css';
 
@@ -10,7 +10,7 @@ const askUserKindlyToMigrateFromScripts = (): void => {
     'Your Quarks configuration needs updating. Open console for more details.',
     toast.Kind.FAILURE,
   );
-  logger.error(
+  _logger.error(
     `In order to continue using your old snippets, you need to migrate your old snippets from the old "scripts" settings key to the new "quarks" settings key.
     To do this, execute
     replugged.plugins.getExports('lib.evelyn.Quark').config.set(
