@@ -75,7 +75,7 @@ const Card = (props: {
           checked={enabled}
           onChange={(newValue: boolean): void => {
             toggleQuark(name, newValue);
-            toast.toast(`Enabled "${name}"`, toast.Kind.SUCCESS);
+            toast.toast(`${newValue ? 'Enabled' : 'Disabled'} "${name}"`, toast.Kind.SUCCESS);
             setEnabled(newValue);
           }}
         />

@@ -160,7 +160,7 @@ export const restart = (name: string): void => {
 export const add = (name: string, quark: Quark, force?: boolean): void => {
   if (typeof name !== 'string' || !name)
     logger.log(`won't add quark "${name || '<blank name>'}": invalid name`);
-  else if ((!force && name in config.get('quarks')) || name in [...quarks.keys()])
+  else if (!force && (name in config.get('quarks')) || name in [...quarks.keys()])
     logger.log(`won't add quark "${name}": quark with name "${name}" already exists`);
   else if (typeof quark !== 'object' || !('enabled' in quark) || !('start' in quark))
     logger.log(
