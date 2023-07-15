@@ -31,47 +31,14 @@
 
 Not very. I would consider this plugin a gigantic security flaw.
 
-## How the f\*\*k do I use this?
+## Configuration
 
-There is no editor UI at the moment.  
-However the syntax is simple enough that you can write the snippet data on your own.
-
-## Okay, how do I write snippets?
-
-- Start by forming your snippets into this format
-  ```ts
-  type Name = string;
-
-  interface Quark {
-    enabled: boolean;
-    start: string;
-    stop?: string;
-  }
-  ```
-- You should have something like this:
-  ```js
-  "test snippet 1" // name
-
-  { // snippet object
-    "enabled": true,
-    "start": "console.log('hi')",
-    "stop": "console.log('bye')"
-  }
-  ```
-- Open `DevTools`' console and execute
-  ```ts
-  replugged.plugins.getExports('lib.evelyn.Quark').quark.add(
-    "<insert snippet name name>",
-    <insert snippet object here>
-  );
-
-  replugged.plugins.getExports('lib.evelyn.Quark').quark.start(
-    "<insert snippet name here>"
-  );
-  ```
-- Profit from the illegally swag automation
+You can add / remove / edit snippets in the plugin's settings menu.
+It cannot get any easier than that.
 
 ## Scope
+
+You can access these things from your snippets:
 
 ```ts
 {
