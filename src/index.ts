@@ -1,40 +1,21 @@
-import { common } from 'replugged';
+import { fluxDispatcher, toast } from 'replugged/common';
+
 import { config, _logger } from '@util';
 import { loadAll, startAll, stopAll } from '@quark';
+
 import './style.css';
 
-const { fluxDispatcher, toast } = common;
+export const newRepoNotice = (): void => {
+  toast.toast('Quark has moved to a new repository. Please reupdate using the updater.', toast.Kind.FAILURE);
 
-const askUserKindlyToMigrateFromScripts = (): void => {
-  toast.toast(
-    'Your Quarks configuration needs updating. Open console for more details.',
-    toast.Kind.FAILURE,
-  );
-  _logger.error(
-    `In order to continue using your old snippets, you need to migrate your old snippets from the old "scripts" settings key to the new "quarks" settings key.
-    To do this, execute
-    replugged.plugins.getExports('lib.evelyn.Quark').config.set(
-      'quarks',
-      replugged.plugins.getExports('lib.evelyn.Quark').config.get('scripts').reduce(
-        (a, { enabled, name, start, stop }) => { a[name] = { enabled, start, stop }; return a },
-        {},
-      )
-    );
-    replugged.plugins.getExports('lib.evelyn.Quark').config.delete('scripts');
-    replugged.plugins.getExports('lib.evelyn.Quark').quark.loadAll();
-    replugged.plugins.getExports('lib.evelyn.Quark').quark.startAll();
-    `,
-  );
+  config.set('newRepoNotice', true);
 
-  fluxDispatcher.unsubscribe('POST_CONNECTION_OPEN', askUserKindlyToMigrateFromScripts);
-};
+  fluxDispatcher.unsubscribe('POST_CONNECTION_OPEN', newRepoNotice);
+}
 
 export const start = (): void => {
-  // @ts-expect-error - migration
-  if (config.get('scripts')) {
-    if (document.querySelector('[class^=panels-]')) askUserKindlyToMigrateFromScripts();
-    else fluxDispatcher.subscribe('POST_CONNECTION_OPEN', askUserKindlyToMigrateFromScripts);
-  }
+  if (!config.get('newRepoNotice'))
+    fluxDispatcher.subscribe('POST_CONNECTION_OPEN', newRepoNotice);
 
   loadAll();
   startAll();

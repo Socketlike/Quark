@@ -1,7 +1,5 @@
 import { _logger, config, logger } from '@util';
-import { common } from 'replugged';
-
-const { lodash: _ } = common;
+import { lodash as _ } from 'replugged/common';
 
 type ReactState<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 

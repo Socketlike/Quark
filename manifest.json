@@ -10,7 +10,7 @@
   "version": "1.0.31",
   "updater": {
     "type": "github",
-    "id": "Socketlike/Quark"
+    "id": "Socketlike/replugged-plugins"
   },
   "license": "MIT",
   "type": "replugged-plugin",

@@ -6,6 +6,7 @@ export const _logger = Logger.plugin('Quark');
 export const defaultConfig = {
   debugging: false,
   quarks: {} as Record<string, Quark>,
+  newRepoNotice: false,
 };
 
 export const config = await settings.init('lib.evelyn.Quark', defaultConfig);
