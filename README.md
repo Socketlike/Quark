@@ -27,7 +27,7 @@
   a post-swc Replugged plugin that allows you to create persistent JavaScript snippets.
 </p>
 
-> **Warning**
+> **Warning**  
 > This plugin has moved to my [central Replugged plugins monorepo](https://github.com/Socketlike/replugged-plugins).
 
 ## Why isn't this on the Replugged plugin store yet?
