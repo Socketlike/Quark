@@ -28,7 +28,7 @@
 </p>
 
 > **Warning**  
-> This plugin has moved to my [central Replugged plugins monorepo](https://github.com/Socketlike/replugged-plugins).
+> This plugin has moved to [**Socketlike/replugged-plugins**](https://github.com/Socketlike/replugged-plugins)
 
 ## Why isn't this on the Replugged plugin store yet?
 
